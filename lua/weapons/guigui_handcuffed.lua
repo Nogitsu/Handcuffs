@@ -1,0 +1,32 @@
+SWEP.PrintName = "Handcuffs"
+SWEP.Author = "Guillaume"
+SWEP.Category = "Guillaume's weapons"
+SWEP.Contact = "steamcommunity.com/id/guillaume_"
+SWEP.Slot = 0
+SWEP.SlotPos = 0
+SWEP.Spawnable = false
+SWEP.ViewModelFOV = 62
+SWEP.ViewModelFlip = false
+SWEP.AnimPrefix = "rpg"
+SWEP.UseHands = true
+SWEP.Primary.ClipSize = -1
+SWEP.Primary.DefaultClip = -1
+SWEP.Primary.Automatic = true
+SWEP.Primary.Ammo = "none"
+SWEP.Secondary.ClipSize = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic = true
+SWEP.Secondary.Ammo = "none"
+SWEP.DrawAmmo = false
+
+function SWEP:Initialize()
+	self:SetHoldType("normal")
+end
+
+function SWEP:Deploy()
+    return true
+end
+
+function SWEP:PreDrawViewModel()
+    return true
+end
