@@ -8,6 +8,7 @@ SWEP.SlotPos = 4
 SWEP.Spawnable = true
 SWEP.AdminOnly = true
 SWEP.ViewModelFOV = 62
+SWEP.WorldModel = ""
 SWEP.ViewModelFlip = false
 SWEP.AnimPrefix = "rpg"
 SWEP.UseHands = true
