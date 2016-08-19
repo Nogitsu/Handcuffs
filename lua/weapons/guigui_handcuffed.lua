@@ -22,6 +22,11 @@ SWEP.DrawAmmo = false
 
 function SWEP:Initialize()
 	self:SetHoldType("normal")
+    timer.Simple(0, function()
+        local speed = self.Owner:GetWalkSpeed()/2
+        self.Owner:SetWalkSpeed(speed)
+	    self.Owner:SetRunSpeed(speed)
+    end)
 end
 
 function SWEP:Deploy()
