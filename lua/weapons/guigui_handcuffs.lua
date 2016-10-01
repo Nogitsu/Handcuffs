@@ -44,6 +44,9 @@ function SWEP:PrimaryAttack()
 				if wep == "weapon_physgun" or wep == "weapon_physcannon" or wep == "gmod_tool" or wep == "weapon_fists" or wep == "keys" or wep == "pocket" then
 					ent:Give("guigui_handcuffed")
 					ent:SelectWeapon("guigui_handcuffed")
+					local speed = ent:GetWalkSpeed()/2
+					ent:SetWalkSpeed(speed)
+					ent:SetRunSpeed(speed)
 					ply:PrintMessage(4, "cuffed" ) 
 				end
 			end
@@ -59,7 +62,10 @@ function SWEP:SecondaryAttack()
 		if ent:IsValid() and ent:IsPlayer() then
 			local wep = ent:GetActiveWeapon():GetClass()
 			if wep == "guigui_handcuffed" then
-				ent:StripWeapon("guigui_handcuffed") 
+				ent:StripWeapon("guigui_handcuffed")
+				local speed = ent:GetWalkSpeed()*2
+				ent:SetWalkSpeed(speed)
+				ent:SetRunSpeed(speed)
 				ply:PrintMessage(4, "uncuffed") 
 			end
 		end
