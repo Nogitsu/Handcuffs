@@ -14,11 +14,27 @@ surface.CreateFont("guigui_HandcuffsDraw",{
 	shadow=true
 })
 
+local lang = GetConVar( "gmod_language" ):GetString()
+
+cvars.AddChangeCallback( "gmod_language", function( convar, oldValue, newValue )
+	lang = newValue
+end, "player_connect_notify" )
+
+local HandCuffed = ""
+
+if lang == "fr" then
+HandCuffed = "MENOTTÉ"
+elseif lang == "de" then
+HandCuffed = "In handschellen"
+else
+HandCuffed = "HANDCUFFED"
+end
+
 hook.Add("PostDrawHUD", "guigui_HandcuffsHUD", function()
 	local ply = LocalPlayer()
 	if ply:HasWeapon("guigui_handcuffed") then
 		if !ply:Alive() then return end
-		draw.DrawText("HANDCUFFED", "guigui_HandcuffsHUD", ScrW()/2, ScrH()/1.08, Color(255, 255, 255, 255),TEXT_ALIGN_CENTER)
+		draw.DrawText(HandCuffed, "guigui_HandcuffsHUD", ScrW()/2, ScrH()/1.08, Color(255, 255, 255, 255),TEXT_ALIGN_CENTER)
 	end
 end)
 
@@ -31,7 +47,7 @@ hook.Add("PostPlayerDraw", "guigui_HandcuffsDraw", function(ply)
 		ang:RotateAroundAxis(ang:Forward(), 90)
 		ang:RotateAroundAxis(ang:Right(), 90)
 		cam.Start3D2D( pos, Angle(0, ang.y, 90), 0.25)
-			draw.DrawText("HANDCUFFED", "guigui_HandcuffsDraw", 2, 2, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER)
+			draw.DrawText(HandCuffed, "guigui_HandcuffsDraw", 2, 2, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER)
 		cam.End3D2D()
 	end
 end)
