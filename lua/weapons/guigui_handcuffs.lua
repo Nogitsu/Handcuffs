@@ -1,4 +1,21 @@
-SWEP.PrintName = "Handcuffs"
+if CLIENT then
+
+local lang = GetConVar( "gmod_language" ):GetString()
+
+cvars.AddChangeCallback( "gmod_language", function( convar, oldValue, newValue )
+	lang = newValue
+end, "player_connect_notify" )
+
+if lang == "fr" then
+	SWEP.PrintName = "Menottes"
+elseif lang == "de" then
+	SWEP.PrintName = "Handschellen"
+else
+	SWEP.PrintName = "Handcuffs"
+end
+
+end
+
 SWEP.Author = "Guillaume"
 SWEP.Category = "Guillaume's weapons"
 SWEP.Instructions = "Left click to cuffed\nRight click to uncuffed"
@@ -34,6 +51,26 @@ function SWEP:PreDrawViewModel()
     return true
 end
 
+local lang = GetConVar( "gmod_language" ):GetString()
+
+cvars.AddChangeCallback( "gmod_language", function( convar, oldValue, newValue )
+	lang = newValue
+end, "player_connect_notify" )
+
+local Cuffed = ""
+local Uncuffed = ""
+
+if lang == "fr" then
+	Cuffed = "Menotté"
+	Uncuffed = "Démenotté"
+elseif lang == "de" then
+	Cuffed = "Gefesselt"
+	Uncuffed = "Frei"
+else
+	Cuffed = "Cuffed"
+	Uncuffed = "Uncuffed"
+end
+
 function SWEP:PrimaryAttack()
 	if SERVER then 
 		local ply = self.Owner
@@ -47,7 +84,13 @@ function SWEP:PrimaryAttack()
 					local speed = ent:GetWalkSpeed()/2
 					ent:SetWalkSpeed(speed)
 					ent:SetRunSpeed(speed)
-					ply:PrintMessage(4, "cuffed" ) 
+					ent:ManipulateBoneAngles(ent:LookupBone("ValveBiped.Bip01_L_UpperArm"), Angle(20, 8.8, 0))
+					ent:ManipulateBoneAngles(ent:LookupBone("ValveBiped.Bip01_L_Forearm"), Angle(15, 0, 0))
+					ent:ManipulateBoneAngles(ent:LookupBone("ValveBiped.Bip01_L_Hand"), Angle(0, 0, 75))
+					ent:ManipulateBoneAngles(ent:LookupBone("ValveBiped.Bip01_R_Forearm"), Angle(-15, 0, 0))
+					ent:ManipulateBoneAngles(ent:LookupBone("ValveBiped.Bip01_R_Hand"), Angle(0, 0, -75))
+					ent:ManipulateBoneAngles(ent:LookupBone("ValveBiped.Bip01_R_UpperArm"), Angle(-20, 16.6, 0))
+					ply:PrintMessage(4, Cuffed ) 
 				end
 			end
 		end
@@ -66,7 +109,13 @@ function SWEP:SecondaryAttack()
 				local speed = ent:GetWalkSpeed()*2
 				ent:SetWalkSpeed(speed)
 				ent:SetRunSpeed(speed)
-				ply:PrintMessage(4, "uncuffed") 
+				ent:ManipulateBoneAngles(ent:LookupBone("ValveBiped.Bip01_L_UpperArm"), Angle(0, 0, 0))
+				ent:ManipulateBoneAngles(ent:LookupBone("ValveBiped.Bip01_L_Forearm"), Angle(0, 0, 0))
+				ent:ManipulateBoneAngles(ent:LookupBone("ValveBiped.Bip01_L_Hand"), Angle(0, 0, 0))
+				ent:ManipulateBoneAngles(ent:LookupBone("ValveBiped.Bip01_R_Forearm"), Angle(0, 0, 0))
+				ent:ManipulateBoneAngles(ent:LookupBone("ValveBiped.Bip01_R_Hand"), Angle(0, 0, 0))
+				ent:ManipulateBoneAngles(ent:LookupBone("ValveBiped.Bip01_R_UpperArm"), Angle(0, 0, 0))
+				ply:PrintMessage(4, Uncuffed) 
 			end
 		end
 	end
